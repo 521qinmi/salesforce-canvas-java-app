@@ -22,6 +22,7 @@ public String canvas(HttpServletRequest request, Model model) {
 
     System.out.println("=== Canvas Endpoint Hit ===");
     System.out.println("METHOD = " + request.getMethod());
+model.addAttribute("requestmethod", request.getMethod());
 
     try {
         String signedRequest = request.getParameter("signed_request");
@@ -63,6 +64,7 @@ public String canvas(HttpServletRequest request, Model model) {
         return "home";
     }
 }
+
 
 
 
