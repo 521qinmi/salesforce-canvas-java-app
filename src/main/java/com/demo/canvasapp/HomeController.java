@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 
-    @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
-    public String home(HttpServletRequest request, Model model) throws Exception {
+   @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
+    public String home(
+            @RequestParam(value = "signed_request", required = false) String signedRequest,
+            Model model) throws Exception {
 
-        String signedRequest = request.getParameter("signed_request");
-
-        if (signedRequest == null || signedRequest.isEmpty()) {
-            model.addAttribute("message", "App running outside Salesforce");
+        if (signedRequest == null) {
+            model.addAttribute("message", "No signed_request (Not opened inside Salesforce)");
             return "home";
         }
 
@@ -35,5 +35,6 @@ public class HomeController {
         return "home";
     }
 }
+
 
 
