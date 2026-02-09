@@ -8,9 +8,8 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        //model.addAttribute("signed_request", "Canvas App is running 🚀");
-        return "home";
-        /*String signedRequest = request.getParameter("signed_request");
+
+        String signedRequest = request.getParameter("signed_request");
 
         if (signedRequest == null || signedRequest.isEmpty()) {
             model.addAttribute("message", "App running outside Salesforce");
@@ -25,9 +24,9 @@ public class HomeController {
 
         model.addAttribute("canvasData", data);
         return "home";
-        */
     }
 }
+
 
 
 
