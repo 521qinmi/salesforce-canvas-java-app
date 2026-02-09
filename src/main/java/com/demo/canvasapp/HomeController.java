@@ -22,6 +22,7 @@ public class HomeController {
             @RequestParam(value = "signed_request", required = false) String signedRequest,
             Model model) throws Exception {
 
+       model.addAttribute("requestmethod", request.getMethod());
         if (signedRequest == null) {
             model.addAttribute("message", "No signed_request (Not opened inside Salesforce)");
             return "home";
@@ -37,6 +38,7 @@ public class HomeController {
         return "home";
     }
 }
+
 
 
 
