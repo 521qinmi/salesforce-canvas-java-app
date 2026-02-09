@@ -19,6 +19,7 @@ public class HomeController {
 
    @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
     public String home(
+           HttpServletRequest request,
             @RequestParam(value = "signed_request", required = false) String signedRequest,
             Model model) throws Exception {
 
@@ -38,6 +39,7 @@ public class HomeController {
         return "home";
     }
 }
+
 
 
 
