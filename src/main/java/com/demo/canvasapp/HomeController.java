@@ -18,26 +18,44 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HomeController {
 
    @RequestMapping(value = "/canvas", method = {RequestMethod.GET, RequestMethod.POST})
-    public String home(
-           HttpServletRequest request,
-            @RequestParam(value = "signed_request", required = false) String signedRequest,
-            Model model) throws Exception {
+public String canvas(HttpServletRequest request, Model model) {
 
-       model.addAttribute("requestmethod", request.getMethod());
-        if (signedRequest == null) {
-            model.addAttribute("message", "No signed_request (Not opened inside Salesforce)");
-            return "home";
+    System.out.println("=== Canvas Endpoint Hit ===");
+    System.out.println("METHOD = " + request.getMethod());
+
+    try {
+        String signedRequest = request.getParameter("signed_request");
+        System.out.println("signed_request = " + signedRequest);
+
+        if (signedRequest != null && !signedRequest.isEmpty()) {
+            String[] parts = signedRequest.split("\\.");
+
+            String payload = new String(
+                java.util.Base64.getUrlDecoder().decode(parts[1]),
+                java.nio.charset.StandardCharsets.UTF_8
+            );
+
+            System.out.println("Payload = " + payload);
+
+            com.fasterxml.jackson.databind.ObjectMapper mapper =
+                new com.fasterxml.jackson.databind.ObjectMapper();
+
+            java.util.Map<String, Object> data =
+                mapper.readValue(payload, java.util.Map.class);
+
+            model.addAttribute("canvasData", data);
+            model.addAttribute("message", "Loaded inside Salesforce ✅");
+        } else {
+            model.addAttribute("message", "Opened outside Salesforce");
         }
 
-        String[] parts = signedRequest.split("\\.");
-        String payload = new String(Base64.getUrlDecoder().decode(parts[1]));
-
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> data = mapper.readValue(payload, Map.class);
-
-        model.addAttribute("canvasData", data);
-        return "home";
+    } catch (Exception e) {
+        e.printStackTrace();
+        model.addAttribute("message", "Error but still returning page: " + e.getMessage());
     }
+
+    return "home"; // 永远返回页面，绝不抛错
+}
    // 浏览器直接访问时用（方便调试）
     @GetMapping("/")
     public String index(Model model) {
@@ -45,6 +63,7 @@ public class HomeController {
         return "home";
     }
 }
+
 
 
 
