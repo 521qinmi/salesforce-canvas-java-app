@@ -7,20 +7,27 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class HomeController {
+@GetMapping("/")
+public String home(HttpServletRequest request, Model model) throws Exception {
 
-    @GetMapping("/")
-    //public String home(HttpServletRequest request, Model model) {
-    public String home() {
+    String signedRequest = request.getParameter("signed_request");
 
-        // Salesforce Canvas 会把用户信息放在请求头里
-       // String signedRequest = request.getParameter("signed_request");
-
-        //model.addAttribute("signedRequest", "test");
+    if (signedRequest == null) {
+        model.addAttribute("message", "App running outside Salesforce");
         return "home";
     }
+
+    String[] parts = signedRequest.split("\\.");
+    String payload = new String(Base64.getUrlDecoder().decode(parts[1]));
+
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, Object> data = mapper.readValue(payload, Map.class);
+
+    model.addAttribute("canvasData", data);
+    return "home";
 }
+
+
 
 
 
