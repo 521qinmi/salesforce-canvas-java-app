@@ -1,19 +1,20 @@
 package com.demo.canvasapp;
-import java.util.Map;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+import jakarta.servlet.http.HttpServletRequest;
+
+@Controller
 public class HomeController {
 
     @GetMapping("/")
-    public Map<String, String> home() {
-        return Map.of(
-            "status", "OK",
-            "message", "Hello from Java Web App!"
-        );
+    public String home(HttpServletRequest request, Model model) {
+
+        // Salesforce Canvas 会把用户信息放在请求头里
+        String signedRequest = request.getParameter("signed_request");
+
+        model.addAttribute("signedRequest", signedRequest);
+        return "home";
     }
 }
