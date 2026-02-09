@@ -14,7 +14,8 @@ public class HomeController {
 
    @GetMapping("/")
     public String home(HttpServletRequest request, Model model) throws Exception {
-    
+       return "home";
+    /*
         String signedRequest = request.getParameter("signed_request");
     
         if (signedRequest == null || signedRequest.isEmpty()) {
@@ -34,6 +35,7 @@ public class HomeController {
        */
     }
 }
+
 
 
 
