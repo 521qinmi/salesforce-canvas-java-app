@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HomeController {
 
-   @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
+   @RequestMapping(value = "/canvas", method = RequestMethod.POST)
     public String home(
            HttpServletRequest request,
             @RequestParam(value = "signed_request", required = false) String signedRequest,
@@ -38,7 +38,14 @@ public class HomeController {
         model.addAttribute("canvasData", data);
         return "home";
     }
+   // 浏览器直接访问时用（方便调试）
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("message", "App is running (direct access)");
+        return "home";
+    }
 }
+
 
 
 
