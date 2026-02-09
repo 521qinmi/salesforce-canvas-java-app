@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class HomeController {
 
    @GetMapping("/")
-    public String home(HttpServletRequest request, Model model) throws Exception {
+    public String home(Model model) {
        return "home";
     /*
         String signedRequest = request.getParameter("signed_request");
@@ -35,6 +35,7 @@ public class HomeController {
        */
     }
 }
+
 
 
 
