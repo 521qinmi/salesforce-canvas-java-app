@@ -20,8 +20,9 @@ public class HomeController {
         if (signedRequest == null || signedRequest.isEmpty()) {
             model.addAttribute("message", "App is running outside Salesforce Canvas.");
             return "home";
-        }
-    
+        } 
+       return "home";
+    /*
         String[] parts = signedRequest.split("\\.");
         String payload = new String(Base64.getUrlDecoder().decode(parts[1]));
     
@@ -30,7 +31,9 @@ public class HomeController {
     
         model.addAttribute("canvasData", data);
         return "home";
+       */
     }
 }
+
 
 
