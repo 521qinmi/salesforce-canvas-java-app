@@ -1,20 +1,14 @@
 package com.demo.canvasapp;
-
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.Base64;
-import java.util.Map;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class HomeController {
 
     @GetMapping("/")
-    public String home(HttpServletRequest request, Model model) throws Exception {
-        model.addAttribute("signed_request", "Canvas App is running 🚀");
+    public String home() {
+        //model.addAttribute("signed_request", "Canvas App is running 🚀");
         return "home";
         /*String signedRequest = request.getParameter("signed_request");
 
@@ -34,4 +28,5 @@ public class HomeController {
         */
     }
 }
+
 
