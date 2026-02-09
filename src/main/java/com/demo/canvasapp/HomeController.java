@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HomeController {
 
-   @RequestMapping(value = "/canvas", method = RequestMethod.POST)
+   @RequestMapping(value = "/canvas", method = {RequestMethod.GET, RequestMethod.POST})
     public String home(
            HttpServletRequest request,
             @RequestParam(value = "signed_request", required = false) String signedRequest,
@@ -45,6 +45,7 @@ public class HomeController {
         return "home";
     }
 }
+
 
 
 
