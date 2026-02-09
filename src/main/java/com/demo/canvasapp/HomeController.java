@@ -1,15 +1,19 @@
 package com.demo.canvasapp;
-import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.Base64;
 import java.util.Map;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Controller
 public class HomeController {
 
     @GetMapping("/")
-    public String home() {
+    public String home(HttpServletRequest request, Model model) throws Exception {
 
         String signedRequest = request.getParameter("signed_request");
 
@@ -28,9 +32,3 @@ public class HomeController {
         return "home";
     }
 }
-
-
-
-
-
-
